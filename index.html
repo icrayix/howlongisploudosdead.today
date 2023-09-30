@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How long is PloudOS dead?</title>
+    <link rel="icon" href="PloudOS.png" type="image/png" />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        transition: all 0.5s ease;
+      }
+      h1 {
+        font-size: 2.5em; /* Increased font size */
+        text-align: center;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          --text-color: #ffffff;
+          --bg-color: #000000;
+        }
+      }
+      @media (prefers-color-scheme: light) {
+        body {
+          --text-color: #000000;
+          --bg-color: #ffffff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      src="PloudOS.png"
+      alt="PloudOS Logo"
+      style="margin-bottom: 3rem; width: 15vh"
+    />
+    <h1>PloudOS has been dead for <span id="duration"></span> :(</h1>
+
+    <script>
+      function formatDuration() {
+        const now = new Date();
+        const date = new Date("2023-09-30T23:30:00+02:00"); // September 30, 2023 23:30 CEST
+        const duration = now - date;
+
+        const seconds = Math.floor((duration / 1000) % 60);
+        const minutes = Math.floor((duration / 1000 / 60) % 60);
+        const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        const days = Math.floor((duration / (1000 * 60 * 60 * 24)) % 365);
+        const years = Math.floor(duration / (1000 * 60 * 60 * 24 * 365));
+
+        let str = "";
+        let count = 0;
+
+        if (years > 0 && count < 3) {
+          str += years + " years, ";
+          count++;
+        }
+        if (days > 0 && count < 3) {
+          str += days + " days, ";
+          count++;
+        }
+        if (hours > 0 && count < 3) {
+          str += hours + " hours, ";
+          count++;
+        }
+        if (minutes > 0 && count < 3) {
+          str += minutes + " minutes, ";
+          count++;
+        }
+        if (seconds > 0 && count < 3) {
+          str += seconds + " seconds";
+          count++;
+        }
+
+        // Remove the trailing comma and space only if they exist
+        return str.endsWith(", ") ? str.slice(0, -2) : str;
+      }
+
+      document.getElementById("duration").textContent = formatDuration();
+      setInterval(function () {
+        document.getElementById("duration").textContent = formatDuration();
+      }, 1000);
+    </script>
+  </body>
+</html>
